@@ -1,0 +1,283 @@
+/* 基础样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7f6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.start-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.start-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.start-container .intro {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+.start-container .intro ul {
+    margin: 15px 0;
+    padding-left: 20px;
+}
+.start-btn {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 12px 0;
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: center;
+}
+.start-btn:hover {
+    background: #219653;
+}
+
+/* 头部样式 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+/* 在原有CSS基础上，添加这一行 */
+p {
+    text-align: left; /* 单独让header内的p标签左对齐 */
+}
+
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* 问题区域样式 */
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    color: #3498db;
+    padding: 0 10px;
+}
+
+.question {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-left: 3px solid #eee;
+}
+
+.question p {
+ /*   font-weight: bold;*/
+    margin-bottom: 10px;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.options label:hover {
+    background: #edf7ff;
+}
+
+.options input[type="radio"] {
+    margin-right: 4px;
+}
+
+/* 分页导航样式 */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.page-indicator {
+    font-weight: bold;
+    color: #7f8c8d;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 8px 15px;
+    background: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: background 0.3s;
+}
+.back-button:hover {
+    background: #2980b9;
+}
+
+.action-buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: none;
+    text-align: center;
+}
+.btn-primary {
+    background: #27ae60;
+    color: #fff;
+}
+.btn-primary:hover {
+    background: #219653;
+}
+.btn-secondary {
+    background: #7f8c8d;
+ color: #fff;
+}
+.btn-secondary:hover {
+    background: #6c7a7b;
+}
+
+.btn-nav, .btn-submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-nav {
+    background: #3498db;
+    color: white;
+}
+
+.btn-nav:hover {
+    background: #2980b9;
+}
+
+.btn-submit {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-submit:hover {
+    background: #45a049;
+}
+
+/* 评分等级的专属样式：用颜色和背景区分不同等级 */
+.rating {
+    margin-left: 10px;       /* 等级文字（如“（差）”）和评分数值（如“1.5”）之间留10px空隙，避免挤在一起 */
+    padding: 2px 8px;        /* 给等级文字加内边距：上下2px、左右8px，让背景色区域更饱满，不贴字 */
+    border-radius: 4px;      /* 给等级背景加4px圆角，避免直角生硬，视觉更柔和 */
+    font-weight: bold;       /* 等级文字加粗（如“（差）”变粗），突出等级信息 */
+}
+
+/* 1. 等级“差”的样式：红色系（警示感，提示较低水平） */
+.rating.poor {
+    background-color: #ffebee;  /* 浅红色背景（淡粉白），不刺眼但能识别是“低等级” */
+    color: #c62828;             /* 深红色文字（接近纯红），和背景色对比明显，文字清晰 */
+}
+
+/* 2. 等级“中等”的样式：橙色系（中性感，提示普通水平） */
+.rating.medium {
+    background-color: #fff8e1;  /* 浅黄色背景（淡橙白），中性色调，不偏警示也不偏积极 */
+    color: #f57c00;             /* 深橙色文字，和背景色对比清晰，符合“中等”的中性定位 */
+}
+
+/* 3. 等级“好”的样式：绿色系（积极感，提示较好水平） */
+.rating.good {
+    background-color: #e8f5e9;  /* 浅绿色背景（淡绿白），传递“良好”的积极信号 */
+    color: #388e3c;             /* 深绿色文字，和背景色对比明显，视觉上更清爽 */
+}
+
+/* 4. 等级“优秀”的样式：蓝色系（高级感，提示顶尖水平） */
+.rating.excellent {
+    background-color: #e3f2fd;  /* 浅蓝色背景（淡蓝白），传递“优秀”的高级、沉稳信号 */
+    color: #1976d2;             /* 深蓝色文字，和背景色对比清晰，符合“优秀”的专业感 */
+}
+
+/* 5. 特殊情况“超出范围”的样式：灰色系（无情绪感，提示异常） */
+.rating.out-of-range {
+    background-color: #f5f5f5;  /* 浅灰色背景（淡灰白），中性无偏向，不传递好坏信号 */
+    color: #757575;             /* 中灰色文字，视觉上“不突出”，符合“无法评价”的次要信息定位 */
+}
+
+/* 等级说明文本的样式：优化描述文字的排版 */
+.description {
+    margin-top: 10px;        /* 说明文本（如“等级说明：心理弹性处于较低水平...”）和上方评分/等级之间留10px空隙，分隔区域 */
+    padding: 10px;           /* 给说明文本加10px内边距，让文字不贴容器边缘，阅读更舒服 */
+    background-color: #f9f9f9;/* 浅灰色背景（比页面底色略深），让说明文本区域和周围区分开，突出解释内容 */
+    border-radius: 4px;      /* 说明文本区域加4px圆角，和等级的圆角呼应，页面风格统一 */
+}
+
+/* 工具类 */
+.hidden {
+    display: none !important;
+}
+
+/* 错误消息样式 */
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c62828;
+}

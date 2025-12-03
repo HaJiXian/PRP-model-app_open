@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咨询结果-心理咨询室</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container result-container">
+        <header>
+            <!-- 浏览器自带的返回按钮 -->
+            <a href="javascript:history.back()" class="back-button">&larr; 返回</a>
+            <h1>预测结果</h1>
+        </header>
+
+        <div class="result-card">
+            <h2>您的心理弹性预测结果是：</h2>
+            <p class="prediction-value">
+            {{ "%.2f"|format(prediction) }}
+            <!-- 根据分数显示等级 -->
+            {% if prediction == 0 %}
+                <span class="rating out-of-range">（评分超出范围）</span>
+            {% elif prediction > 0 and prediction < 1.8 %}
+                <span class="rating poor">（差）</span>
+            {% elif prediction >= 1.8 and prediction < 2.6 %}
+                <span class="rating medium">（中等）</span>
+            {% elif prediction >= 2.6 and prediction < 3.4 %}
+                <span class="rating good">（好）</span>
+            {% elif prediction >= 3.4 and prediction <= 4 %}  <!-- 3.4及以上，最高4分 -->
+                <span class="rating excellent">（优秀）</span>
+            {% endif %}
+            </p>
+
+            <!-- 根据分数显示描述文本 -->
+            {% if prediction == 0 %}
+                <p class="description">该评分已超出评价范围，无法进行相关评价，可能是由于模型存在些许误差所致。</p>
+            {% elif prediction > 0 and prediction < 1.8 %}
+                <p class="description">等级说明：心理弹性处于较低水平，可能在面对压力和挫折时较难快速恢复。</p>
+            {% elif prediction >= 1.8 and prediction < 2.6 %}
+                <p class="description">等级说明：心理弹性处于中等水平，具备基本的抗压能力，面对挑战时能逐步调整。</p>
+            {% elif prediction >= 2.6 and prediction < 3.4 %}
+                <p class="description">等级说明：心理弹性处于良好水平，面对压力时能较好地适应和恢复，心态较为积极。</p>
+            {% elif prediction >= 3.4 and prediction <= 4 %}
+                <p class="description">等级说明：心理弹性处于优秀水平，具有很强的抗压能力和适应能力，能从容应对各种挑战。</p>
+            {% endif %}
+        </div>
+
+
+        <div class="action-buttons">
+            <!-- 你要求的自设按钮：返回一个新的预测界面 -->
+            <a href="{{ url_for('start') }}" class="btn btn-secondary">返回开始页面</a>
+
+            <a href="{{ url_for('new_assessment') }}" class="btn btn-primary" onclick="clearAssessmentData()">重新开始新的评估</a>
+
+        </div>
+    </div>
+
+    <!-- JavaScript文件 -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+    // 结果页单独定义清空函数，确保点击时能立即执行
+    function clearAssessmentData() {
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith('q')) { // 只删问卷相关的键，不影响其他数据
+                localStorage.removeItem(key);
+            }
+        });
+    }
+    </script>
+</body>
+</html>

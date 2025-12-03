@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理弹性咨询室</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <div class="container start-container">
+        <!-- 模型加载错误提示（如有） -->
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <h1>心理弹性评估问卷</h1>
+        <div class="intro">
+            <p>欢迎参与心理弹性评估！本问卷旨在通过您的作答，评估您当前的心理弹性水平，并为您提供针对性的心理调节建议。</p>
+            <p><strong>问卷说明：</strong></p>
+            <ul>
+                <li>问卷总有114道题目，分为六个部分，预计耗时10-15分钟，所有题目均为单选题；</li>
+                <li>请根据您的真实情况如实作答，无需过度思考，您的答案仅用于个人评估，严格保密；</li>
+                <li>完成所有题目后，系统将自动生成您的心理弹性评分及解读。</li>
+            </ul>
+        </div>
+        <!-- 开始按钮：点击先清数据，再跳问卷页 -->
+        <button class="start-btn" onclick="clearResidueDataAndGoToQuiz()">开始评估</button>
+    </div>
+
+    <script>
+        // 开始前清除残留数据
+        function clearResidueDataAndGoToQuiz() {
+            // 清除所有以q开头的问卷数据（q1、q2...）
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('q')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            // 跳转到问卷页（路由为/questionnaire）
+            window.location.href = "{{ url_for('questionnaire') }}";
+        }
+    </script>
+</body>
+</html>
