@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评估结果 - 心理弹性咨询室</title>
+    <!-- 样式统一在 style.css 中管理 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Chart.js 图表库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="result-page">
+        <a href="{{ url_for('questionnaire') }}" class="back-link">&larr; 返回问卷</a>
+
+        <!-- 区块1：心理弹性得分、评级和描述 -->
+        <div class="section-card score-section">
+            <h2 class="section-title">心理弹性评估结果</h2>
+
+            <!-- 半圆弧形进度指示器 -->
+            <div class="score-gauge-container">
+                <svg class="score-gauge" viewBox="0 0 200 130">
+                    <!-- 背景弧 -->
+                    <path class="gauge-bg" d="M 25 105 A 75 75 0 0 1 175 105" />
+                    <!-- 进度弧 -->
+                    <path class="gauge-fill" d="M 25 105 A 75 75 0 0 1 175 105"
+                          stroke-dasharray="235.6"
+                          stroke-dashoffset="{{ 235.6 - (prediction / 4 * 235.6) }}" />
+                    <!-- 刻度标记 - 放在外环之外 -->
+                    <text x="8" y="112" class="gauge-label">0</text>
+                    <text x="100" y="18" class="gauge-label" text-anchor="middle">2</text>
+                    <text x="192" y="112" class="gauge-label">4</text>
+                </svg>
+                <div class="score-value">{{ "%.2f"|format(prediction) }}</div>
+            </div>
+
+            {% if prediction < 0 %}
+                <div class="score-rating score-rating-outofrange">评分超出范围</div>
+                <p class="score-description score-desc-outofrange">该评分已超出评价范围，无法进行相关评价，可能是由于模型存在些许误差所致。</p>
+            {% elif prediction >= 0 and prediction < 1.8 %}
+                <div class="score-rating score-rating-poor">较低水平</div>
+                <p class="score-description score-desc-poor">您的心理弹性处于较低水平，在面对压力和挫折时可能较难快速恢复。建议关注下方的改善建议，逐步提升心理弹性。</p>
+            {% elif prediction >= 1.8 and prediction < 2.6 %}
+                <div class="score-rating score-rating-normal">中等水平</div>
+                <p class="score-description score-desc-normal">您的心理弹性处于中等水平，具备基本的抗压能力，面对挑战时能逐步调整。</p>
+            {% elif prediction >= 2.6 and prediction < 3.4 %}
+                <div class="score-rating score-rating-good">良好水平</div>
+                <p class="score-description score-desc-good">您的心理弹性处于良好水平，能较好地适应压力和变化，心态相对积极。</p>
+            {% elif prediction >= 3.4 and prediction <= 4 %}
+                <div class="score-rating score-rating-excellent">优秀水平</div>
+                <p class="score-description score-desc-excellent">您的心理弹性处于优秀水平，具有很强的抗压能力和适应能力，能从容应对各种挑战。</p>
+            {% endif %}
+        </div>
+
+        <!-- 区块2：大维度柱状图和进度条 -->
+        <div class="section-card">
+            <h2 class="section-title">三大维度得分</h2>
+            <div class="big-dim-section">
+                <!-- 柱状图 -->
+                <div class="bar-chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+
+                <!-- 进度条 -->
+                <div class="progress-container">
+                    {% for key in ['w1', 'w2', 'w3'] %}
+                    {% set dim = chart_data.big_dimensions[key] %}
+                    <div class="dim-progress-item">
+                        <div class="dim-progress-header">
+                            <span class="dim-name">
+                                {{ dim.name }}
+                                {% if dim.level == '优秀' %}
+                                    <span class="level-tag level-excellent">优秀</span>
+                                {% elif dim.level == '较差' %}
+                                    <span class="level-tag level-poor">较差</span>
+                                {% else %}
+                                    <span class="level-tag level-normal">一般</span>
+                                {% endif %}
+                            </span>
+                            <span class="dim-score-info">{{ dim.score }}分</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill"
+                                 style="width: {{ (dim.score / 5 * 100)|round }}%;
+                                        background: {% if dim.level == '优秀' %}#2ecc71{% elif dim.level == '较差' %}#e57373{% else %}#64b5f6{% endif %};">
+                            </div>
+                            <div class="progress-markers">
+                                <div class="marker-line marker-lower" style="left: {{ (dim.lower / 5 * 100)|round }}%;" title="较差线 {{ dim.lower }}"></div>
+                                <div class="marker-line marker-mean" style="left: {{ (dim.mean / 5 * 100)|round }}%;" title="平均值 {{ dim.mean }}"></div>
+                                <div class="marker-line marker-upper" style="left: {{ (dim.upper / 5 * 100)|round }}%;" title="优秀线 {{ dim.upper }}"></div>
+                            </div>
+                        </div>
+                        <div class="progress-legend">
+                            <span class="legend-val" style="left: 0;">0</span>
+                            <span class="legend-val" style="left: {{ (dim.lower / 5 * 100)|round }}%;">{{ "%.2f"|format(dim.lower) }}</span>
+                            <span class="legend-val" style="left: {{ (dim.mean / 5 * 100)|round }}%;">{{ "%.2f"|format(dim.mean) }}</span>
+                            <span class="legend-val" style="left: {{ (dim.upper / 5 * 100)|round }}%;">{{ "%.2f"|format(dim.upper) }}</span>
+                            <span class="legend-val" style="left: 100%;">5</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- 参考线统一图例 -->
+                    <div class="progress-ref-legend">
+                        <div class="ref-legend-item">
+                            <span class="ref-legend-line" style="background: #e57373;"></span>
+                            <span>较差线 (μ-σ)</span>
+                        </div>
+                        <div class="ref-legend-item">
+                            <span class="ref-legend-line" style="background: #ffb74d;"></span>
+                            <span>群体均值 (μ)</span>
+                        </div>
+                        <div class="ref-legend-item">
+                            <span class="ref-legend-line" style="background: #2ecc71;"></span>
+                            <span>优秀线 (μ+σ)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 区块3：子维度雷达图 -->
+        <div class="section-card radar-section">
+            <h2 class="section-title">子维度详细分析</h2>
+
+            <!-- 维度切换按钮 -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-dim="w1">亲和力</button>
+                <button class="tab-btn" data-dim="w2">生命力</button>
+                <button class="tab-btn" data-dim="w3">意志力</button>
+            </div>
+
+            <!-- 雷达图 -->
+            <div class="radar-chart-wrapper">
+                <div class="radar-chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 图例 -->
+            <div class="radar-legend">
+                <div class="legend-item">
+                    <span class="legend-line legend-score"></span>
+                    <span>您的得分</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-line legend-mean"></span>
+                    <span>群体平均</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-line legend-upper"></span>
+                    <span>优秀线(μ+σ)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-line legend-lower"></span>
+                    <span>较差线(μ-σ)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 区块4：分析报告 -->
+        {% if analysis %}
+        <div class="section-card analysis-section">
+            <h2 class="section-title">心理咨询师分析报告</h2>
+            <div class="analysis-content">
+                {{ analysis|safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- 操作按钮 -->
+        <div class="action-buttons">
+            <a href="{{ url_for('start') }}" class="btn btn-secondary">返回首页</a>
+            <a href="{{ url_for('new_assessment') }}" class="btn btn-primary" onclick="clearAssessmentData()">重新评估</a>
+        </div>
+    </div>
+
+    <script>
+    // 图表数据（从后端传入）
+    const chartData = {{ chart_data|tojson|safe }};
+
+    // ===== 柱状图：三大维度得分对比 =====
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const bigDims = chartData.big_dimensions;
+
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: [bigDims.w1.name, bigDims.w2.name, bigDims.w3.name],
+            datasets: [{
+                label: '您的得分',
+                data: [bigDims.w1.score, bigDims.w2.score, bigDims.w3.score],
+                backgroundColor: [
+                    bigDims.w1.level === '优秀' ? '#2ecc71' : bigDims.w1.level === '较差' ? '#e57373' : '#64b5f6',
+                    bigDims.w2.level === '优秀' ? '#2ecc71' : bigDims.w2.level === '较差' ? '#e57373' : '#64b5f6',
+                    bigDims.w3.level === '优秀' ? '#2ecc71' : bigDims.w3.level === '较差' ? '#e57373' : '#64b5f6'
+                ],
+                borderRadius: 8,
+                barThickness: 50
+            }, {
+                label: '群体平均',
+                data: [bigDims.w1.mean, bigDims.w2.mean, bigDims.w3.mean],
+                backgroundColor: 'rgba(127, 140, 141, 0.3)',
+                borderColor: '#7f8c8d',
+                borderWidth: 2,
+                borderRadius: 8,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 5,
+                    ticks: { stepSize: 1 }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // ===== 雷达图：子维度得分 =====
+    let radarChart = null;
+    const radarCtx = document.getElementById('radarChart').getContext('2d');
+
+    // 根据维度key创建雷达图
+    function createRadarChart(dimKey) {
+        const subDims = chartData.sub_dimensions[dimKey];
+        const labels = subDims.map(d => d.name);
+        const scores = subDims.map(d => d.score);
+        const means = subDims.map(d => d.mean);
+        const uppers = subDims.map(d => d.upper);
+        const lowers = subDims.map(d => d.lower);
+
+        if (radarChart) {
+            radarChart.destroy();
+        }
+
+        radarChart = new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '您的得分',
+                    data: scores,
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    borderColor: '#3498db',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#3498db',
+                    pointRadius: 5
+                }, {
+                    label: '群体平均',
+                    data: means,
+                    backgroundColor: 'transparent',
+                    borderColor: '#ffb74d',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointBackgroundColor: '#ffb74d',
+                    pointRadius: 3
+                }, {
+                    label: '优秀线',
+                    data: uppers,
+                    backgroundColor: 'transparent',
+                    borderColor: '#2ecc71',
+                    borderWidth: 1.5,
+                    borderDash: [3, 3],
+                    pointRadius: 0
+                }, {
+                    label: '较差线',
+                    data: lowers,
+                    backgroundColor: 'transparent',
+                    borderColor: '#e57373',
+                    borderWidth: 1.5,
+                    borderDash: [3, 3],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: false,
+                        max: 5,
+                        min: 0,
+                        ticks: {
+                            stepSize: 1,
+                            font: { size: 11 }
+                        },
+                        pointLabels: {
+                            font: { size: 13, weight: 'bold' }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw.toFixed(2);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 默认显示亲和力
+    createRadarChart('w1');
+
+    // 维度切换按钮事件
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            createRadarChart(this.dataset.dim);
+        });
+    });
+
+    // 清除问卷数据（重新评估时调用）
+    function clearAssessmentData() {
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith('q')) {
+                localStorage.removeItem(key);
+            }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在分析中...</title>
+    <!-- 样式统一在 style.css 中管理 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container wait-container">
+        <!-- 加载动画 -->
+        <div class="spinner"></div>
+
+        <!-- doro表情包 -->
+        <div class="doro-gifs-container">
+            <div class="doro-row">
+                <img src="{{ url_for('static', filename='sources/1.gif') }}" alt="doro1" class="doro-gif">
+                <img src="{{ url_for('static', filename='sources/2.gif') }}" alt="doro2" class="doro-gif">
+            </div>
+        </div>
+
+        <div class="doro-gifs-container">
+            <img src="{{ url_for('static', filename='sources/3.gif') }}" alt="doro3" class="doro-gif doro-gif-large">
+        </div>
+
+        <!-- 加载提示文字 -->
+        <div class="loading-dots">• • •</div>
+
+        <h1 class="wait-message">心理咨询师正在为您分析...</h1>
+        <p class="wait-subtitle">预计需要 8-12 分钟，请您耐心等待</p>
+
+        <!-- 进度条 -->
+        <div class="wait-progress-bar-container">
+            <div class="wait-progress-bar"></div>
+        </div>
+
+        <!-- 走路小人 -->
+        <div class="character-animation"><span>(=｀ω´=)</span></div>
+
+        <!-- 状态提示 -->
+        <p class="status-text" id="statusText"></p>
+
+        <p class="small-text">
+            请保持页面打开，系统将自动跳转到结果页面
+        </p>
+    </div>
+
+    <!-- 隐藏表单：携带原始问卷数据，页面加载后自动提交 -->
+    <form id="realPredictForm" action="{{ url_for('predict_process') }}" method="POST" style="display: none;">
+        {% for key, value in form_data.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endfor %}
+    </form>
+
+    <script>
+        // 页面加载完成后自动提交表单到后端处理
+        window.onload = function() {
+            var statusText = document.getElementById('statusText');
+            statusText.textContent = '正在提交分析请求...';
+
+            // 延迟1秒后提交，确保页面完全加载
+            setTimeout(function() {
+                statusText.textContent = '已提交，正在等待分析结果...';
+                document.getElementById('realPredictForm').submit();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

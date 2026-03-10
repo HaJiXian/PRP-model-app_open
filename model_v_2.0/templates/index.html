@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理弹性咨询问卷-心理弹性咨询室</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>心理弹性咨询问卷</h1>
+            <p>请根据您的实际情况回答以下所有问题（共114题），共计需要10-18分钟。</p>
+            <p>本咨询问卷共计六个部分，分为性格优势、运动习惯、睡眠习惯、情绪控制、实践经验、个人部分。</p>
+            <p>感谢您的耐心填写，祝您生活愉快，事事顺心！</p>
+        </header>
+
+        {% if error %}
+            <div class="error-message">
+                <strong>错误：</strong> {{ error }}
+            </div>
+        {% endif %}
+
+        <form id="questionnaire-form" action="{{ url_for('predict') }}" method="post">
+            <!-- 分页容器 -->
+            <div id="page-container">
+                <!-- 第1页 -->
+                <div class="page" id="page-1" data-page="1">
+                    <fieldset>
+                        <legend>一、性格优势测试</legend>
+                        <p>该部分为中国人美德问卷（CVQ-96），用于测评一个人的性格优势。请就下列每项描述，选出最适合您的答案。答案本身无对错之分，请尽量如实回答。（总八页，共96题，预计8-15分钟）</p>
+
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>1.我从来不会在任务没完成时就放弃。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q1" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q1" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q1" value="3"> 中立</label>
+                                <label><input type="radio" name="q1" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q1" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>2.我一向遵守承诺。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q2" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q2" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q2" value="3"> 中立</label>
+                                <label><input type="radio" name="q2" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q2" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>3.我总是对事物抱着乐观的态度。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q3" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q3" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q3" value="3"> 中立</label>
+                                <label><input type="radio" name="q3" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q3" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>4.我总是会从事物的正反两面去考虑问题。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q4" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q4" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q4" value="3"> 中立</label>
+                                <label><input type="radio" name="q4" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q4" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>5.我知道如何在不同的社交场合下扮演适合自己的角色。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q5" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q5" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q5" value="3"> 中立</label>
+                                <label><input type="radio" name="q5" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q5" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>6.我做事从不虎头蛇尾。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q6" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q6" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q6" value="3"> 中立</label>
+                                <label><input type="radio" name="q6" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q6" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>7.我的朋友认为我能够保持事情的真实性。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q7" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q7" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q7" value="3"> 中立</label>
+                                <label><input type="radio" name="q7" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q7" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>8.能为朋友做些小事让我感到很享受。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q8" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q8" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q8" value="3"> 中立</label>
+                                <label><input type="radio" name="q8" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q8" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>9.我身边有人像关心自己一样关心我，在乎我的感受。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q9" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q9" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q9" value="3"> 中立</label>
+                                <label><input type="radio" name="q9" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q9" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>10.我非常喜欢成为团体中的一分子。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q10" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q10" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q10" value="3"> 中立</label>
+                                <label><input type="radio" name="q10" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q10" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>11.作为一个组织的领导，不管成员有过怎样的经历，我都对他们一视同仁。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q11" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q11" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q11" value="3"> 中立</label>
+                                <label><input type="radio" name="q11" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q11" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>12.就算美食当前，我也不会吃过量。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q12" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q12" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q12" value="3"> 中立</label>
+                                <label><input type="radio" name="q12" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q12" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 第2-8页 (类似结构) -->
+
+                <div class="page hidden" id="page-2" data-page="2">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>13.当别人看到事物消极的一面时，我总能乐观地发现它积极的一面。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q13" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q13" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q13" value="3"> 中立</label>
+                                <label><input type="radio" name="q13" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q13" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>14.我喜欢想一些新的方法去解决问题。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q14" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q14" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q14" value="3"> 中立</label>
+                                <label><input type="radio" name="q14" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q14" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>15.我尽力让那些沮丧的人振作起来。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q15" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q15" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q15" value="3"> 中立</label>
+                                <label><input type="radio" name="q15" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q15" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>16.我是一个高度自律的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q16" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q16" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q16" value="3"> 中立</label>
+                                <label><input type="radio" name="q16" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q16" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>17.我总是思考以后再讲话。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q17" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q17" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q17" value="3"> 中立</label>
+                                <label><input type="radio" name="q17" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q17" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>18.即使面对挑战，我也总对将来充满希望。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q18" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q18" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q18" value="3"> 中立</label>
+                                <label><input type="radio" name="q18" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q18" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>19.在困难的时刻，我的信仰从来没有离弃过我。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q19" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q19" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q19" value="3"> 中立</label>
+                                <label><input type="radio" name="q19" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q19" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>20.我有能力令其他人对一些事物产生兴趣。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q20" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q20" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q20" value="3"> 中立</label>
+                                <label><input type="radio" name="q20" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q20" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>21.即使会遇到阻碍，我也要把事情完成。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q21" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q21" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q21" value="3"> 中立</label>
+                                <label><input type="radio" name="q21" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q21" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>22.对我来说，每个人的权利同样重要。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q22" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q22" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q22" value="3"> 中立</label>
+                                <label><input type="radio" name="q22" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q22" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>23.我会控制自己的情绪。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q23" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q23" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q23" value="3"> 中立</label>
+                                <label><input type="radio" name="q23" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q23" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>24.我能看到被别人忽视的美好事物。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q24" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q24" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q24" value="3"> 中立</label>
+                                <label><input type="radio" name="q24" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q24" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="page hidden" id="page-3" data-page="3">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>25.我有明确的生活目标。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q25" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q25" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q25" value="3"> 中立</label>
+                                <label><input type="radio" name="q25" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q25" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>26.我从不吹嘘自己的成就。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q26" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q26" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q26" value="3"> 中立</label>
+                                <label><input type="radio" name="q26" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q26" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>27.我热爱自己所做的事情。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q27" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q27" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q27" value="3"> 中立</label>
+                                <label><input type="radio" name="q27" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q27" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>28.我一向容许别人把错误留在过去，重新开始。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q28" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q28" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q28" value="3"> 中立</label>
+                                <label><input type="radio" name="q28" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q28" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>29.我对各式各样的活动都感到兴奋。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q29" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q29" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q29" value="3"> 中立</label>
+                                <label><input type="radio" name="q29" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q29" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>30.我是个真正的终身学习者。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q30" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q30" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q30" value="3"> 中立</label>
+                                <label><input type="radio" name="q30" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q30" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>31.我的朋友欣赏我能客观地看待事物。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q31" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q31" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q31" value="3"> 中立</label>
+                                <label><input type="radio" name="q31" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q31" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>32.我总能想出新方法去做事情。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q32" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q32" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q32" value="3"> 中立</label>
+                                <label><input type="radio" name="q32" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q32" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>33.我总能知道别人行事的动机。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q33" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q33" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q33" value="3"> 中立</label>
+                                <label><input type="radio" name="q33" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q33" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>34.我的承诺值得信赖。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q34" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q34" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q34" value="3"> 中立</label>
+                                <label><input type="radio" name="q34" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q34" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>35.我会给每个人机会。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q35" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q35" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q35" value="3"> 中立</label>
+                                <label><input type="radio" name="q35" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q35" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>36.作为一个领导者，我一视同仁。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q36" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q36" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q36" value="3"> 中立</label>
+                                <label><input type="radio" name="q36" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q36" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="page hidden" id="page-4" data-page="4">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>37.我是一个充满感恩之心的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q37" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q37" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q37" value="3"> 中立</label>
+                                <label><input type="radio" name="q37" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q37" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>38.我试着在所作的任何事情中添加一点幽默的成分。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q38" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q38" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q38" value="3"> 中立</label>
+                                <label><input type="radio" name="q38" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q38" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>39.我希望人们能学会原谅和遗忘。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q39" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q39" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q39" value="3"> 中立</label>
+                                <label><input type="radio" name="q39" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q39" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>40.我有很多兴趣爱好。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q40" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q40" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q40" value="3"> 中立</label>
+                                <label><input type="radio" name="q40" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q40" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>41.朋友们认为我有各种各样的新奇想法。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q41" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q41" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q41" value="3"> 中立</label>
+                                <label><input type="radio" name="q41" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q41" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>42.我总能看到事物的全部。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q42" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q42" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q42" value="3"> 中立</label>
+                                <label><input type="radio" name="q42" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q42" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>43.我总能捍卫自己的信念。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q43" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q43" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q43" value="3"> 中立</label>
+                                <label><input type="radio" name="q43" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q43" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>44.我不言放弃。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q44" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q44" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q44" value="3"> 中立</label>
+                                <label><input type="radio" name="q44" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q44" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>45.在朋友生病时，我总会致电问候。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q45" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q45" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q45" value="3"> 中立</label>
+                                <label><input type="radio" name="q45" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q45" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>46.我总能感受到自己生命中有爱存在。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q46" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q46" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q46" value="3"> 中立</label>
+                                <label><input type="radio" name="q46" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q46" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>47.维持团体内的和睦对我来说很重要。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q47" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q47" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q47" value="3"> 中立</label>
+                                <label><input type="radio" name="q47" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q47" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>48.行动前，我总是先考虑可能出现的结果。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q48" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q48" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q48" value="3"> 中立</label>
+                                <label><input type="radio" name="q48" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q48" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="page hidden" id="page-5" data-page="5">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>49.我总能觉察到周围环境里存在的自然美。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q49" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q49" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q49" value="3"> 中立</label>
+                                <label><input type="radio" name="q49" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q49" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>50.我的信仰塑造了现在的我。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q50" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q50" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q50" value="3"> 中立</label>
+                                <label><input type="radio" name="q50" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q50" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>51.我从不让沮丧的境遇带走我的幽默感。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q51" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q51" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q51" value="3"> 中立</label>
+                                <label><input type="radio" name="q51" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q51" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>52.我精力充沛。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q52" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q52" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q52" value="3"> 中立</label>
+                                <label><input type="radio" name="q52" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q52" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>53.我总是愿意给他人改正错误的机会。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q53" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q53" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q53" value="3"> 中立</label>
+                                <label><input type="radio" name="q53" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q53" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>54.在任何情形下，我都能找到乐趣。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q54" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q54" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q54" value="3"> 中立</label>
+                                <label><input type="radio" name="q54" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q54" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>55.我常常阅读。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q55" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q55" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q55" value="3"> 中立</label>
+                                <label><input type="radio" name="q55" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q55" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>56.深思熟虑是我的特点之一。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q56" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q56" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q56" value="3"> 中立</label>
+                                <label><input type="radio" name="q56" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q56" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>57.我经常有原创性的思维。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q57" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q57" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q57" value="3"> 中立</label>
+                                <label><input type="radio" name="q57" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q57" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>58.我对人生有成熟的看法。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q58" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q58" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q58" value="3"> 中立</label>
+                                <label><input type="radio" name="q58" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q58" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>59.我总能直面自己的恐惧。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q59" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q59" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q59" value="3"> 中立</label>
+                                <label><input type="radio" name="q59" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q59" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>60.我非常喜欢各种形式的艺术。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q60" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q60" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q60" value="3"> 中立</label>
+                                <label><input type="radio" name="q60" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q60" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="page hidden" id="page-6" data-page="6">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>61.我对生命中所得到的一切都充满感激。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q61" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q61" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q61" value="3"> 中立</label>
+                                <label><input type="radio" name="q61" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q61" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>62.我很有幽默感。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q62" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q62" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q62" value="3"> 中立</label>
+                                <label><input type="radio" name="q62" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q62" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>63.我总会权衡利弊。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q63" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q63" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q63" value="3"> 中立</label>
+                                <label><input type="radio" name="q63" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q63" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>64.别人喜欢来征询我的建议。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q64" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q64" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q64" value="3"> 中立</label>
+                                <label><input type="radio" name="q64" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q64" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>65.我曾经战胜过痛苦与失望。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q65" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q65" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q65" value="3"> 中立</label>
+                                <label><input type="radio" name="q65" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q65" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>66.我享受善待他人的感觉。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q66" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q66" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q66" value="3"> 中立</label>
+                                <label><input type="radio" name="q66" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q66" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>67.我能够接受别人的爱。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q67" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q67" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q67" value="3"> 中立</label>
+                                <label><input type="radio" name="q67" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q67" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>68.即使不同意团体领袖的观点，我还是会尊重。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q68" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q68" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q68" value="3"> 中立</label>
+                                <label><input type="radio" name="q68" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q68" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>69.作为一个团体领导，我尽量让每一个成员快乐。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q69" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q69" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q69" value="3"> 中立</label>
+                                <label><input type="radio" name="q69" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q69" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>70.我是个非常小心的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q70" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q70" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q70" value="3"> 中立</label>
+                                <label><input type="radio" name="q70" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q70" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>71.当审视自己的生活时，我发现有很多地方值得感恩。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q71" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q71" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q71" value="3"> 中立</label>
+                                <label><input type="radio" name="q71" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q71" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>72.别人告诉我，谦虚是我最显著的优点之一。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q72" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q72" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q72" value="3"> 中立</label>
+                                <label><input type="radio" name="q72" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q72" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="page hidden" id="page-7" data-page="7">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>73.通常情况下，我愿意给别人第二次机会。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q73" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q73" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q73" value="3"> 中立</label>
+                                <label><input type="radio" name="q73" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q73" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>74.我认为我的生活非常有趣。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q74" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q74" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q74" value="3"> 中立</label>
+                                <label><input type="radio" name="q74" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q74" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>75.我阅读大量各种各样的书籍。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q75" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q75" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q75" value="3"> 中立</label>
+                                <label><input type="radio" name="q75" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q75" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>76.我总是知道说什么话可以让别人感觉良好。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q76" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q76" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q76" value="3"> 中立</label>
+                                <label><input type="radio" name="q76" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q76" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>77.在我的邻居、同事或同学中，有我真正关心的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q77" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q77" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q77" value="3"> 中立</label>
+                                <label><input type="radio" name="q77" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q77" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>78.尊重团体的决定对我来说很重要。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q78" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q78" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q78" value="3"> 中立</label>
+                                <label><input type="radio" name="q78" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q78" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>79.我认为每个人都应该有发言权。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q79" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q79" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q79" value="3"> 中立</label>
+                                <label><input type="radio" name="q79" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q79" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>80.作为团体领导者，我认为每个成员都有对团体所做的事发表意见的权力。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q80" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q80" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q80" value="3"> 中立</label>
+                                <label><input type="radio" name="q80" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q80" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>81.我总是谨慎地做出决定。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q81" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q81" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q81" value="3"> 中立</label>
+                                <label><input type="radio" name="q81" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q81" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>82.我经常渴望能感受伟大的艺术，比如音乐、戏剧或绘画。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q82" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q82" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q82" value="3"> 中立</label>
+                                <label><input type="radio" name="q82" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q82" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>83.每天我都心怀深刻的感激之情。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q83" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q83" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q83" value="3"> 中立</label>
+                                <label><input type="radio" name="q83" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q83" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>84.情绪低落时，我总是回想生活中美好的事情。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q84" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q84" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q84" value="3"> 中立</label>
+                                <label><input type="radio" name="q84" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q84" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="page hidden" id="page-8" data-page="8">
+                    <fieldset>
+                        <!-- 问题模板 - 重复12次 -->
+                        <div class="question">
+                            <p>85.信仰使我的生命变得重要。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q85" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q85" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q85" value="3"> 中立</label>
+                                <label><input type="radio" name="q85" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q85" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>86.没有人认为我是一个自大的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q86" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q86" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q86" value="3"> 中立</label>
+                                <label><input type="radio" name="q86" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q86" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>87.早晨醒来，我会为了新一天中存在的无限可能性而兴奋。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q87" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q87" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q87" value="3"> 中立</label>
+                                <label><input type="radio" name="q87" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q87" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>88.我喜欢阅读非小说类的书籍作为消遣。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q88" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q88" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q88" value="3"> 中立</label>
+                                <label><input type="radio" name="q88" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q88" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>89.别人认为我是一个聪明的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q89" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q89" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q89" value="3"> 中立</label>
+                                <label><input type="radio" name="q89" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q89" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>90.我是一个勇敢的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q90" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q90" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q90" value="3"> 中立</label>
+                                <label><input type="radio" name="q90" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q90" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>91.别人相信我能帮他们保守秘密。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q91" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q91" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q91" value="3"> 中立</label>
+                                <label><input type="radio" name="q91" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q91" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>92.我相信聆听每个人的意见是值得的。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q92" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q92" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q92" value="3"> 中立</label>
+                                <label><input type="radio" name="q92" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q92" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>93.我定时锻炼身体。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q93" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q93" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q93" value="3"> 中立</label>
+                                <label><input type="radio" name="q93" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q93" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>94.别人都因我的谦逊而走近我。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q94" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q94" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q94" value="3"> 中立</label>
+                                <label><input type="radio" name="q94" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q94" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>95.我因富于幽默而被众人所知。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q95" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q95" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q95" value="3"> 中立</label>
+                                <label><input type="radio" name="q95" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q95" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+
+
+                        <!-- 重复11次类似结构 -->
+                        <div class="question">
+                            <p>96.人们形容我为一个热情洋溢的人。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q96" value="1"> 非常不像我</label>
+                                <label><input type="radio" name="q96" value="2"> 比较不像我</label>
+                                <label><input type="radio" name="q96" value="3"> 中立</label>
+                                <label><input type="radio" name="q96" value="4"> 比较像我</label>
+                                <label><input type="radio" name="q96" value="5"> 非常像我</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- 第9页 -->
+                <div class="page hidden" id="page-9" data-page="9">
+                    <!-- 运动习惯部分 -->
+                    <fieldset>
+                        <legend>二、体育运动习惯调查</legend>
+                        <div class="question">
+                            <p>1. 除通勤外，我也保持了较为规律的体育运动。</p>
+                            <p><strong>【评分标准】</strong></p>
+                            <p><strong>1分（很不符合）：</strong>平均一学期下来基本不运动或只有少量几次运动。</p>
+                            <p><strong>2分（不符合）：</strong>为了考试、平时分会运动，但是相对随心，没有规律，除此之外基本不运动。</p>
+                            <p><strong>3分（一般）：</strong>为了考试、平时分会规律地运动，除此之外很少或基本不运动。</p>
+                            <p><strong>4分（符合）：</strong>每周/每月都会保持一定次数的运动，较为规律，很少出现长时间不运动的情况。</p>
+                            <p><strong>5分（很符合）：</strong>有严格的锻炼安排，并且总是按照计划进行。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q97" value="1"> 很不符合</label>
+                                <label><input type="radio" name="q97" value="2"> 不符合</label>
+                                <label><input type="radio" name="q97" value="3"> 一般</label>
+                                <label><input type="radio" name="q97" value="4"> 符合</label>
+                                <label><input type="radio" name="q97" value="5"> 很符合</label>
+                            </div>
+                        </div>
+                        <!-- 更多问题 -->
+                        <div class="question">
+                            <p>2.除去通勤，我平均每周的运动时长大约为：</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q98" value="1"> 0~2小时</label>
+                                <label><input type="radio" name="q98" value="3"> 2~4小时</label>
+                                <label><input type="radio" name="q98" value="5"> 4~6小时</label>
+                                <label><input type="radio" name="q98" value="7"> 6~8小时</label>
+                                <label><input type="radio" name="q98" value="9"> 8~10小时</label>
+                                <label><input type="radio" name="q98" value="11"> 10~12小时</label>
+                                <label><input type="radio" name="q98" value="12"> ≥12小时</label>
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <!-- 睡眠习惯部分 -->
+                    <fieldset>
+                        <legend>三、睡眠习惯调查</legend>
+                        <div class="question">
+                            <P>1.每日睡眠习惯一致性评分</P>
+                            <p><strong>【评分标准】</strong></p>
+                            <p><strong>1分：</strong>相邻2天的入睡/起床时间经常出现≥2h的差异，甚至昼夜颠倒。</p>
+                            <p><strong>2分：</strong>相邻2天的入睡/起床时间经常出现1~2h的差异，偶尔出现≥2h的差异。</p>
+                            <p><strong>3分：</strong>相邻2天的入睡/起床时间差异≤1h，偶尔出现1~2h的差异。</p>
+                            <p><strong>4分：</strong>相邻2天的入睡/起床时间差异基本在0.5~1h，很少出现≥1h的差异。</p>
+                            <p><strong>5分：</strong>相邻2天的入睡/起床时间基本固定，很少出现0.5以上的差异。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q99" value="1"> 1分</label>
+                                <label><input type="radio" name="q99" value="2"> 2分</label>
+                                <label><input type="radio" name="q99" value="3"> 3分</label>
+                                <label><input type="radio" name="q99" value="4"> 4分</label>
+                                <label><input type="radio" name="q99" value="5"> 5分</label>
+                            </div>
+                        </div>
+                        <!-- 更多问题 -->
+                        <div class="question">
+                            <p>2.我平日的夜间入睡时间点范围（24时制）<strong>（工作日）</strong></p>
+                            <p><strong>【单选题】</strong></p>
+                            <p>请选择对你来说输入“夜间入睡时间”的时间</p>
+                            <div class="options">
+                                <label><input type="radio" name="q100" value="-1.5"> 22~23时</label>
+                                <label><input type="radio" name="q100" value="-0.5"> 23~0时</label>
+                                <label><input type="radio" name="q100" value="0.5"> 0~1时</label>
+                                <label><input type="radio" name="q100" value="1.5"> 1~2时</label>
+                                <label><input type="radio" name="q100" value="2.5"> 2~3时</label>
+                                <label><input type="radio" name="q100" value="3.5"> 3~4时</label>
+                                <label><input type="radio" name="q100" value="4.5"> 4~5时</label>
+                                <label><input type="radio" name="q100" value="5.5"> 5~6时</label>
+                                <label><input type="radio" name="q100" value="6"> 6~22时</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>3.我平日的夜间入睡时间点范围（24时制）<strong>（节假日）</strong></p>
+                            <p><strong>【单选题】</strong></p>
+                            <p>请选择对你来说输入“夜间入睡时间”的时间</p>
+                            <div class="options">
+                                <label><input type="radio" name="q101" value="-1.5"> 22~23时</label>
+                                <label><input type="radio" name="q101" value="-0.5"> 23~0时</label>
+                                <label><input type="radio" name="q101" value="0.5"> 0~1时</label>
+                                <label><input type="radio" name="q101" value="1.5"> 1~2时</label>
+                                <label><input type="radio" name="q101" value="2.5"> 2~3时</label>
+                                <label><input type="radio" name="q101" value="3.5"> 3~4时</label>
+                                <label><input type="radio" name="q101" value="4.5"> 4~5时</label>
+                                <label><input type="radio" name="q101" value="5.5"> 5~6时</label>
+                                <label><input type="radio" name="q101" value="6"> 6~22时</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>4.我平日里夜间平均睡眠时长约为：<strong>（工作日）</strong></p>
+                            <p><strong>【单选题】</strong></p>
+                            <p>请选择对你来说输入“夜间睡眠”的时长</p>
+                            <div class="options">
+                                <label><input type="radio" name="q102" value="2"> 0~4小时</label>
+                                <label><input type="radio" name="q102" value="4.5"> 4~5小时</label>
+                                <label><input type="radio" name="q102" value="5.5"> 5~6小时</label>
+                                <label><input type="radio" name="q102" value="6.5"> 6~7小时</label>
+                                <label><input type="radio" name="q102" value="7.5"> 7~8小时</label>
+                                <label><input type="radio" name="q102" value="8.5"> 8~9小时</label>
+                                <label><input type="radio" name="q102" value="9.5"> 9~10小时</label>
+                                <label><input type="radio" name="q102" value="10.5"> 10~11小时</label>
+                                <label><input type="radio" name="q102" value="11.5"> 11~12小时</label>
+                                <label><input type="radio" name="q102" value="12"> 12~24小时</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>5.我平日里夜间平均睡眠时长约为：<strong>（节假日）</strong></p>
+                            <p><strong>【单选题】</strong></p>
+                            <p>请选择对你来说输入“夜间睡眠”的时长</p>
+                            <div class="options">
+                                <label><input type="radio" name="q103" value="2"> 0~4小时</label>
+                                <label><input type="radio" name="q103" value="4.5"> 4~5小时</label>
+                                <label><input type="radio" name="q103" value="5.5"> 5~6小时</label>
+                                <label><input type="radio" name="q103" value="6.5"> 6~7小时</label>
+                                <label><input type="radio" name="q103" value="7.5"> 7~8小时</label>
+                                <label><input type="radio" name="q103" value="8.5"> 8~9小时</label>
+                                <label><input type="radio" name="q103" value="9.5"> 9~10小时</label>
+                                <label><input type="radio" name="q103" value="10.5"> 10~11小时</label>
+                                <label><input type="radio" name="q103" value="11.5"> 11~12小时</label>
+                                <label><input type="radio" name="q103" value="12"> 12~24小时</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- 情绪控制部分 -->
+                    <fieldset>
+                        <legend>四、情绪管理调查</legend>
+                        <p>请就下列每项描述，选出最适合你的答案。答案无对错之分，请如实回答。</p>
+                        <div class="question">
+                            <p>1.在压力大时，我会用游戏或者艺术缓解压力。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q104" value="1"> 从不</label>
+                                <label><input type="radio" name="q104" value="2"> 很少</label>
+                                <label><input type="radio" name="q104" value="3"> 偶尔</label>
+                                <label><input type="radio" name="q104" value="4"> 经常</label>
+                                <label><input type="radio" name="q104" value="5"> 总是</label>
+                            </div>
+                        </div>
+                        <!-- 更多问题 -->
+                        <div class="question">
+                            <p>2.我会用哭泣的方式排解情绪。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q105" value="1"> 从不</label>
+                                <label><input type="radio" name="q105" value="2"> 很少</label>
+                                <label><input type="radio" name="q105" value="3"> 偶尔</label>
+                                <label><input type="radio" name="q105" value="4"> 经常</label>
+                                <label><input type="radio" name="q105" value="5"> 总是</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>3.当我情绪低落/高亢时，我会在社交媒体上发布相关内容或者向他人倾诉。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q106" value="1"> 从不</label>
+                                <label><input type="radio" name="q106" value="2"> 很少</label>
+                                <label><input type="radio" name="q106" value="3"> 偶尔</label>
+                                <label><input type="radio" name="q106" value="4"> 经常</label>
+                                <label><input type="radio" name="q106" value="5"> 总是</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>4.我会用一些专业的方法（如自我暗示、冥想）来调整自己的情绪。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q107" value="1"> 从不</label>
+                                <label><input type="radio" name="q107" value="2"> 很少</label>
+                                <label><input type="radio" name="q107" value="3"> 偶尔</label>
+                                <label><input type="radio" name="q107" value="4"> 经常</label>
+                                <label><input type="radio" name="q107" value="5"> 总是</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- 实践经验部分 -->
+                    <fieldset>
+                        <legend>五、实践活动经验调查</legend>
+                        <div class="question">
+                            <P>1.志愿活动/社区服务经历丰富程度评分</P>
+                            <p><strong>【评分标准】</strong></p>
+                            <p><strong>1分：</strong>从未参与过任何活动。</p>
+                            <p><strong>2分：</strong>参与过1~2次活动，没有参与过相关服务团体/组织。</p>
+                            <p><strong>3分：</strong>参与过1~2次活动，参与过相关服务团体/组织。</p>
+                            <p><strong>4分：</strong>参与过>2次活动，没有参与过相关服务团体/组织。</p>
+                            <p><strong>5分：</strong>参与过>2次活动，参与过相关服务团体/组织。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q108" value="1"> 1分</label>
+                                <label><input type="radio" name="q108" value="2"> 2分</label>
+                                <label><input type="radio" name="q108" value="3"> 3分</label>
+                                <label><input type="radio" name="q108" value="4"> 4分</label>
+                                <label><input type="radio" name="q108" value="5"> 5分</label>
+                            </div>
+                        </div>
+                        <!-- 更多问题 -->
+                        <div class="question">
+                            <P>2.工作经历（包括班委/学生干部、兼职、实习等）丰富程度评分</P>
+                            <p><strong>【评分标准】</strong></p>
+                            <p><strong>1分：</strong>从未从事过任何工作。</p>
+                            <p><strong>2分：</strong>从事过或正在从事1份工作，工作时间≤2个月。</p>
+                            <p><strong>3分：</strong>从事过或正在从事1份工作，工作时间2~4个月。</p>
+                            <p><strong>4分：</strong>从事过或正在从事1份工作，工作时间4~6个月。</p>
+                            <p><strong>5分：</strong>从事过或正在从事1份工作，工作时间≥6个月。</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q109" value="1"> 1分</label>
+                                <label><input type="radio" name="q109" value="2"> 2分</label>
+                                <label><input type="radio" name="q109" value="3"> 3分</label>
+                                <label><input type="radio" name="q109" value="4"> 4分</label>
+                                <label><input type="radio" name="q109" value="5"> 5分</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- 个人部分 -->
+                    <fieldset>
+                        <legend>六、个人部分</legend>
+                        <div class="question">
+                            <p>1.您的生物学性别为：</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q110" value="男"> 男</label>
+                                <label><input type="radio" name="q110" value="女"> 女</label>
+                            </div>
+                        </div>
+                        <!-- 更多问题 -->
+                        <div class="question">
+                            <p>2.您的年龄段为：</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q111" value="17"> 16~18周岁</label>
+                                <label><input type="radio" name="q111" value="19"> 18~20周岁</label>
+                                <label><input type="radio" name="q111" value="21"> 20~22周岁</label>
+                                <label><input type="radio" name="q111" value="23"> 22~24周岁</label>
+                                <label><input type="radio" name="q111" value="25"> 24~26周岁</label>
+                                <label><input type="radio" name="q111" value="26"> 26周岁以上</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>3.您的生源地类型为：</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q112" value="乡镇"> 乡镇</label>
+                                <label><input type="radio" name="q112" value="城镇"> 城镇</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>4.您的专业门类为（文科类：包括哲学、经济学、法学、教育学、文学、历史学、军事学、艺术学、管理学等；理科类：只包括理学、工学、农学、医学）：</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q113" value="文科类"> 文科类</label>
+                                <label><input type="radio" name="q113" value="理科类"> 理科类</label>
+                            </div>
+                        </div>
+                        <div class="question">
+                            <p>5.您的专业本科学制为：</p>
+                            <p><strong>【单选题】</strong></p>
+                            <div class="options">
+                                <label><input type="radio" name="q114" value="4年制"> 4年制</label>
+                                <label><input type="radio" name="q114" value="5年制"> 5年制</label>
+                                <label><input type="radio" name="q114" value="8年制"> 8年制</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!-- 分页导航 -->
+            <div class="pagination">
+                <button type="button" id="prev-btn" class="btn-nav hidden">上一页</button>
+                <span class="page-indicator">第 <span id="current-page">1</span> 页 / 共 9 页</span>
+                <button type="button" id="next-btn" class="btn-nav">下一页</button>
+                <button type="submit" id="submit-btn" class="btn-submit hidden">提交问卷并预测</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- JavaScript文件 -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
